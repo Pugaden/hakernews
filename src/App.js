@@ -9,6 +9,22 @@ const list = [
     num_comments: 3,
     points: 4,
     objectID: 0,
+  }, 
+  {
+    title: 'React2',
+    url: 'https://facebook.github.io/rect/',
+    author: 'Den Pugachov',
+    num_comments: 5,
+    points: 2,
+    objectID: 1,
+  },
+   {
+    title: 'React3',
+    url: 'https://facebook.github.io/rect/',
+    author: 'Podrez Jenya',
+    num_comments: 3,
+    points: 4,
+    objectID: 2,
   },
   {
     title: 'Redux',
@@ -16,7 +32,7 @@ const list = [
     author: 'Dan Abramov, Andrew Clark',
     num_comments: 2,
     points: 5,
-    objectID: 1,
+    objectID: 3,
   },
 ];
 
@@ -29,6 +45,7 @@ class App extends Component {
       list,
     }; 
 
+    this.onSearchChange = this.onSearchChange.bind(this); // bind the method onSearchChange
     this.onDismiss = this.onDismiss.bind(this);
   }
 
@@ -41,6 +58,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <form>
+          <input
+            type="text"
+            onChange={this.onSearchChange}
+          />
+        </form>
         { this.state.list.map(item =>
           <div key={item.objectID}>
             <span>
