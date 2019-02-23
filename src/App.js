@@ -11,7 +11,7 @@ const list = [
     objectID: 0,
   }, 
   {
-    title: 'React2',
+    title: 'Some_text',
     url: 'https://facebook.github.io/rect/',
     author: 'Den Pugachov',
     num_comments: 5,
@@ -19,7 +19,7 @@ const list = [
     objectID: 1,
   },
    {
-    title: 'React3',
+    title: 'Bull_sheet',
     url: 'https://facebook.github.io/rect/',
     author: 'Podrez Jenya',
     num_comments: 3,
@@ -36,6 +36,12 @@ const list = [
   },
 ];
 
+//(|| only one is true) You filter the list only when a searchTerm is set. When a searchTerm is set, 
+//you match the incoming searchTerm pattern with the title of the item. 
+const isSearched = (searchTerm) => (item) =>  
+  !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+
 class App extends Component {
 
   constructor(props) {
@@ -43,6 +49,7 @@ class App extends Component {
 
     this.state = {
       list,
+      searchTerm: '', // define the initial state for the searchTerm
     }; 
 
     this.onSearchChange = this.onSearchChange.bind(this); // bind the method onSearchChange
@@ -55,6 +62,10 @@ class App extends Component {
     this.setState({ list:updatedList });
   }
 
+  onSearchChange(event) { // event has the value of the input field in its target object
+    this.setState({ searchTerm: event.target.value });
+  }
+
   render() {
     return (
       <div className="App">
@@ -64,7 +75,7 @@ class App extends Component {
             onChange={this.onSearchChange}
           />
         </form>
-        { this.state.list.map(item =>
+        { this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
           <div key={item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
